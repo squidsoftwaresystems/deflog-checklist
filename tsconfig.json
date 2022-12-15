@@ -7,7 +7,9 @@
 		"forceConsistentCasingInFileNames": true,
 		"paths": {
 			"$components": ["src/components"],
-			"$components/*": ["src/lib/components/*"]
+			"$components/*": ["src/lib/components/*"],
+			"$lib":["src/lib"],
+			"$lib/*":["src/lib/*"]
 		},
 		"resolveJsonModule": true,
 		"skipLibCheck": true,

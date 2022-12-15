@@ -21,8 +21,11 @@
 }
 
 html, body {
-  @apply h-full;
+  @apply inset-0;
   background-color: #f3f4f6;
+}
+body {
+  position: absolute;
 }
 h1 {
   font-size: 30px;
