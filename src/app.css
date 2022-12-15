@@ -1,6 +1,11 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+@layer base {
+  img {
+    @apply inline-block;
+  }
+}
 
 :root {
   --accent-color: CornflowerBlue;

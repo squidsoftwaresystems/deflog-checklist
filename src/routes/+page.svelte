@@ -2,6 +2,9 @@
   import RadioButton from '$components/RadioButton.svelte'
   import Alert from '$components/Alert.svelte'
 
+  // @ts-ignore: next-line
+  import html2pdf from 'html2pdf.js'
+
   const textInputCSS = `
     form-control
     block
@@ -55,6 +58,17 @@
     }
   }
 
+  const downloadPDF = () => {
+    const opt ={
+      margin: 1,
+      filename: 'DEFLog_checklist.pdf',
+      enableLinks: true,
+      pagebreak: { mode: 'avoid-all' }
+    }
+    const element = document.getElementById('main')
+    html2pdf().set(opt).from(element).save()
+  }
+
   let progressCSS = 'width: 0;'
   $: if (organisation && progressCSS !== 'width: 100%;')                                              progressCSS = 'width: 7%;'
   $: if (dataservice && progressCSS !== 'width: 100%;')                                               progressCSS = 'width: 14%;'
@@ -80,7 +94,7 @@
 
 </script>
 
-<main class="p-20 max-w-3xl">
+<main class="p-20 max-w-3xl" id="main">
   <img class="mb-5" src="/deflog_logo.svg" alt="DL" />
   <h1>DEFLog dataservice onboarding checklist</h1>
 
@@ -89,7 +103,6 @@
   </div>
 
   <p class="mb-5">U heeft een dataservice en wilt deze aanbieden op DEFLog?<br>Doorloop de checklist en leer of uw dataservice geschikt is!<p>
-  
   <p class="font-bold">Hoe heet uw organisatie?</p>
   <input 
     class={textInputCSS}
@@ -242,7 +255,7 @@
               </li>
             </ul>
           </div>
-          <p class="my-5">Ga naar <a class="underline" href="https://iamconnected.eu" target="_blank" rel="noreferrer">IAMconnected</a> om {organisation} te registreren!</p>
+          <p class="my-5">Volg de <a class="underline" href="https://www.deflog.org/images/Documenten/20221112_Procesbeschrijving_Aanmelden_DEFLog_v2.pdf">DEFLog IAMconnected instructies</a> om {organisation} te registreren!</p>
         {/if}
         {#if !hasFunctionalDocs || !hasTechnicalDocs || !implementsStandard || !hasTOS || !licensedData}
           <p>Onderstaande punten zijn geen dealbreakers, maar worden wel aanbevolen:</p>
@@ -292,6 +305,9 @@
         </ul>
       </div>
     {/if}
-    <p>Neem contact op met <a class="underline" href="mailto:customerservice@portbase.com">customer support</a> voor aanvullende informatie.</p>
+    <p>Neem contact op met <a class="underline" href="mailto:info@deflog.org">customer support</a> voor aanvullende informatie.</p>
+    <button class="mt-5 rounded-lg bg-gray-100 border-gray-300 font-normal border p-2 px-4" on:click={downloadPDF}>
+      Checklist als PDF downloaden
+    </button>
   {/if}
 </main>
