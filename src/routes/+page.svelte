@@ -197,7 +197,7 @@
       </p>
       <p>
         Voor meer informatie zie de 
-        <a href="https://data.deflog.nl/documentation" target="_blank" rel="noreferrer" class="underline">
+        <a href="https://data.deflog.nl/documentation" target="_blank" rel="noreferrer" class="inline-block underline">
           DEFLog documentatie
         </a>.
       </p>
