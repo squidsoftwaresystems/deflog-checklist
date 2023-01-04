@@ -84,7 +84,7 @@
   $: if (implementsStandard || implementsStandard === false)                                          progressCSS = 'width: 100%;'
 
   let onboardingOK: boolean = true
-  $: if ((hasKVK || hasIAMConnected) && (isAPI || isBroker) && canValidateTokens && relevantForLogistics) {
+  $: if ((hasKVK || hasIAMConnected) && (isAPI || isBroker) && canValidateTokens && relevantForLogistics && hasTechnicalDocs) {
     onboardingOK = true
   } else {
     onboardingOK = false
@@ -234,7 +234,7 @@
     <p class="font-bold mt-8 mb-5 text-lg underline underline-offset-2">Conclusie</p>
     {#if onboardingOK}
       <Alert type='success'>{dataservice} kan op DEFLog gepubliceerd worden!</Alert>
-      {#if (!hasIAMConnected || !hasFunctionalDocs || !hasTechnicalDocs ||!implementsStandard || !hasTOS)}
+      {#if (!hasIAMConnected || !hasFunctionalDocs ||!implementsStandard || !hasTOS)}
         <p>Er zijn wel een aantal aandachtspunten.</p>
         {#if hasIAMConnected === false}
           <div class="mx-auto pl-4">
@@ -248,18 +248,13 @@
           </div>
           <p class="my-5">Volg de <a class="underline" href="https://www.deflog.org/images/Documenten/20221112_Procesbeschrijving_Aanmelden_DEFLog_v2.pdf">DEFLog IAMconnected instructies</a> om {organisation} te registreren!</p>
         {/if}
-        {#if !hasFunctionalDocs || !hasTechnicalDocs || !implementsStandard || !hasTOS }
+        {#if !hasFunctionalDocs || !implementsStandard || !hasTOS }
           <p>Onderstaande punten zijn geen dealbreakers, maar worden wel aanbevolen:</p>
           <div class="mx-auto pl-4">
             <ul class="list-disc mb-5">
               {#if hasFunctionalDocs === false}
                 <li>
                   Er is geen functionele documentatie.
-                </li>
-              {/if}
-              {#if hasTechnicalDocs === false}
-                <li>
-                  Er is geen technische documentatie.
                 </li>
               {/if}
               {#if implementsStandard === false}
@@ -286,6 +281,9 @@
           {/if}
           {#if !canValidateTokens}
             <li>{dataservice} moet de tokens van DEFLog gebruikers kunnen valideren.</li>
+          {/if}
+          {#if hasTechnicalDocs === false}
+            <li>Er moet technische documentatie aanwezig zijn voor de afnemers van {dataservice}.</li>
           {/if}
           {#if !relevantForLogistics}
             <li>DEFLog is bedoeld voor de logistieke sector, de aangeboden data moet daarom logistiek relevant zijn.</li>
