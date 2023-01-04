@@ -31,7 +31,6 @@
   let hasIAMConnected: boolean
   let hasKVK: boolean
   let authorisedToSign: boolean
-  let licensedData: boolean
   let hasTOS: boolean
   let hasFunctionalDocs: boolean
   let relevantForLogistics: boolean
@@ -70,19 +69,18 @@
   }
 
   let progressCSS = 'width: 0;'
-  $: if (organisation && progressCSS !== 'width: 100%;')                                              progressCSS = 'width: 7%;'
-  $: if (dataservice && progressCSS !== 'width: 100%;')                                               progressCSS = 'width: 14%;'
-  $: if ((hasIAMConnected || hasIAMConnected === false) && progressCSS !== 'width: 100%;')            progressCSS = 'width: 21%;'
-  $: if ((hasKVK || hasKVK === false) && progressCSS !== 'width: 100%;')                              progressCSS = 'width: 28%;'
-  $: if ((authorisedToSign || authorisedToSign === false) && progressCSS !== 'width: 100%;')          progressCSS = 'width: 35%;'
-  $: if ((licensedData || licensedData === false) && progressCSS !== 'width: 100%;')                  progressCSS = 'width: 42%;'
-  $: if ((hasTOS || hasTOS === false) && progressCSS !== 'width: 100%;')                              progressCSS = 'width: 49%;'
-  $: if ((hasFunctionalDocs || hasFunctionalDocs === false) && progressCSS !== 'width: 100%;')        progressCSS = 'width: 56%;'
-  $: if ((relevantForLogistics || relevantForLogistics === false) && progressCSS !== 'width: 100%;')  progressCSS = 'width: 63%;'
-  $: if ((isAPI || isAPI === false) && progressCSS !== 'width: 100%;')                                progressCSS = 'width: 70%;'
-  $: if ((isBroker || isBroker === false) && progressCSS !== 'width: 100%;')                          progressCSS = 'width: 77%;'
-  $: if ((canValidateTokens || canValidateTokens === false) && progressCSS !== 'width: 100%;')        progressCSS = 'width: 84%;'
-  $: if ((hasTechnicalDocs || hasTechnicalDocs === false) && progressCSS !== 'width: 100%;')          progressCSS = 'width: 91%;'
+  $: if (organisation && progressCSS !== 'width: 100%;')                                              progressCSS = `width: ${100 / 13}%;`
+  $: if (dataservice && progressCSS !== 'width: 100%;')                                               progressCSS = `width: ${100 / 13 * 2}%;`
+  $: if ((hasIAMConnected || hasIAMConnected === false) && progressCSS !== 'width: 100%;')            progressCSS = `width: ${100 / 13 * 3}%;`
+  $: if ((hasKVK || hasKVK === false) && progressCSS !== 'width: 100%;')                              progressCSS = `width: ${100 / 13 * 4}%;`
+  $: if ((authorisedToSign || authorisedToSign === false) && progressCSS !== 'width: 100%;')          progressCSS = `width: ${100 / 13 * 5}%;`
+  $: if ((hasTOS || hasTOS === false) && progressCSS !== 'width: 100%;')                              progressCSS = `width: ${100 / 13 * 6}%;`
+  $: if ((hasFunctionalDocs || hasFunctionalDocs === false) && progressCSS !== 'width: 100%;')        progressCSS = `width: ${100 / 13 * 7}%;`
+  $: if ((relevantForLogistics || relevantForLogistics === false) && progressCSS !== 'width: 100%;')  progressCSS = `width: ${100 / 13 * 8}%;`
+  $: if ((isAPI || isAPI === false) && progressCSS !== 'width: 100%;')                                progressCSS = `width: ${100 / 13 * 9}%;`
+  $: if ((isBroker || isBroker === false) && progressCSS !== 'width: 100%;')                          progressCSS = `width: ${100 / 13 * 10}%;`
+  $: if ((canValidateTokens || canValidateTokens === false) && progressCSS !== 'width: 100%;')        progressCSS = `width: ${100 / 13 * 11}%;`
+  $: if ((hasTechnicalDocs || hasTechnicalDocs === false) && progressCSS !== 'width: 100%;')          progressCSS = `width: ${100 / 13 * 12}%;`
   $: if (implementsStandard || implementsStandard === false)                                          progressCSS = 'width: 100%;'
 
   let onboardingOK: boolean = true
@@ -148,13 +146,6 @@
       </div>
     {/if}
 
-    <div class="mb-5">
-      <RadioButton
-        options={ja_nee_options}
-        question={`Wordt de data van ${dataservice} uitgegeven onder een licentie?`}
-        bind:userSelected={licensedData}
-      />
-    </div>
     <div class="mb-5">
       <RadioButton
         options={ja_nee_options}
@@ -243,7 +234,7 @@
     <p class="font-bold mt-8 mb-5 text-lg underline underline-offset-2">Conclusie</p>
     {#if onboardingOK}
       <Alert type='success'>{dataservice} kan op DEFLog gepubliceerd worden!</Alert>
-      {#if (!hasIAMConnected || !hasFunctionalDocs || !hasTechnicalDocs ||!implementsStandard || !hasTOS ||!licensedData)}
+      {#if (!hasIAMConnected || !hasFunctionalDocs || !hasTechnicalDocs ||!implementsStandard || !hasTOS)}
         <p>Er zijn wel een aantal aandachtspunten.</p>
         {#if hasIAMConnected === false}
           <div class="mx-auto pl-4">
@@ -257,7 +248,7 @@
           </div>
           <p class="my-5">Volg de <a class="underline" href="https://www.deflog.org/images/Documenten/20221112_Procesbeschrijving_Aanmelden_DEFLog_v2.pdf">DEFLog IAMconnected instructies</a> om {organisation} te registreren!</p>
         {/if}
-        {#if !hasFunctionalDocs || !hasTechnicalDocs || !implementsStandard || !hasTOS || !licensedData}
+        {#if !hasFunctionalDocs || !hasTechnicalDocs || !implementsStandard || !hasTOS }
           <p>Onderstaande punten zijn geen dealbreakers, maar worden wel aanbevolen:</p>
           <div class="mx-auto pl-4">
             <ul class="list-disc mb-5">
@@ -276,9 +267,6 @@
               {/if}
               {#if hasTOS === false}
                 <li>Er zijn geen algemene voorwaarden van toepassing op {dataservice}.</li>
-              {/if}
-              {#if licensedData === false}
-                <li>Er is geen licentie van toepassing op {dataservice}.</li>
               {/if}
             </ul>
           </div>
