@@ -273,7 +273,7 @@
       <p>Om {dataservice} te kunnen onboarden op DEFLog zijn de volgende zaken vereist:</p>
       <div class="mx-auto pl-4">
         <ul class="list-disc mb-5">
-          {#if !hasIAMConnected}
+          {#if !hasIAMConnected && !hasKVK}
             <li>{organisation} moet geregistreerd worden op IAMConnected, hiervoor is een KVK-registratie verplicht.</li>
           {/if}
           {#if !isAPI && !isBroker}
